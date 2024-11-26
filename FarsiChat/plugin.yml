@@ -1,0 +1,6 @@
+name: FarsiChat
+main: codes\Main
+version: 1.0.0
+api: [5.21.1] # نسخه API سازگار با Piggot
+description: A plugin to fix Farsi text in chat.
+author: ShahabManoochehry
