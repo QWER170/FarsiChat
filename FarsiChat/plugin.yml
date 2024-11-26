@@ -1,0 +1,6 @@
+name: FarsiChat
+main: FarsiChat\Main
+version: 1.0.0
+api: [5.0.0] # نسخه API سرور PocketMine یا Piggot
+description: A plugin to reverse and fix Farsi text in chat.
+author: YourName
