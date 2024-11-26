@@ -1,6 +1,6 @@
 <?php
 
-namespace FarsiChat;
+namespace codes;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
