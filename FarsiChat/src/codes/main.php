@@ -19,10 +19,10 @@ class Main extends PluginBase implements Listener {
 
     public function onChat(PlayerChatEvent $event): void {
         $message = $event->getMessage();
-        
-        // بررسی اینکه آیا متن فارسی است یا نه
+
+        // بررسی اینکه آیا متن حاوی حروف فارسی است
         if ($this->containsFarsi($message)) {
-            // اصلاح متن فارسی
+            // اصلاح و معکوس کردن متن فارسی
             $fixedMessage = $this->fixFarsiText($message);
             $event->setMessage($fixedMessage);
         }
@@ -37,28 +37,31 @@ class Main extends PluginBase implements Listener {
         // معکوس کردن متن
         $reversed = implode('', array_reverse(mb_str_split($text)));
 
-        // اصلاح حروف فارسی برای چسباندن
-        $joined = $this->joinFarsiLetters($reversed);
-        return $joined;
+        // اصلاح چسبندگی حروف فارسی (در صورت نیاز)
+        return $this->joinFarsiLetters($reversed);
     }
 
     private function joinFarsiLetters(string $text): string {
-        // جدول حروف فارسی و شکل‌های مختلف آن‌ها
-        $farsiMap = [
-            'ا' => 'ا', 'ب' => 'ب', 'پ' => 'پ', 'ت' => 'ت',
-            'ث' => 'ث', 'ج' => 'ج', 'چ' => 'چ', 'ح' => 'ح',
-            'خ' => 'خ', 'د' => 'د', 'ذ' => 'ذ', 'ر' => 'ر',
-            'ز' => 'ز', 'ژ' => 'ژ', 'س' => 'س', 'ش' => 'ش',
-            'ص' => 'ص', 'ض' => 'ض', 'ط' => 'ط', 'ظ' => 'ظ',
-            'ع' => 'ع', 'غ' => 'غ', 'ف' => 'ف', 'ق' => 'ق',
-            'ک' => 'ک', 'گ' => 'گ', 'ل' => 'ل', 'م' => 'م',
-            'ن' => 'ن', 'و' => 'و', 'ه' => 'ه', 'ی' => 'ی',
+        // جدول ساده چسبندگی حروف فارسی
+        $lettersMap = [
+            'ا' => 'ﺍ', 'ب' => 'ﺑ', 'پ' => 'ﭘ', 'ت' => 'ﺗ',
+            'ث' => 'ﺛ', 'ج' => 'ﺟ', 'چ' => 'ﭼ', 'ح' => 'ﺣ',
+            'خ' => 'ﺧ', 'د' => 'ﺩ', 'ذ' => 'ﺫ', 'ر' => 'ﺭ',
+            'ز' => 'ﺯ', 'ژ' => 'ﮊ', 'س' => 'ﺳ', 'ش' => 'ﺷ',
+            'ص' => 'ﺻ', 'ض' => 'ﺿ', 'ط' => 'ﻃ', 'ظ' => 'ﻇ',
+            'ع' => 'ﻋ', 'غ' => 'ﻏ', 'ف' => 'ﻓ', 'ق' => 'ﻗ',
+            'ک' => 'ﻛ', 'گ' => 'ﮔ', 'ل' => 'ﻟ', 'م' => 'ﻣ',
+            'ن' => 'ﻧ', 'و' => 'ﻭ', 'ه' => 'ﻫ', 'ی' => 'ﯾ',
         ];
 
-        // پردازش و چسباندن حروف (به صورت ساده)
         $output = '';
         $length = mb_strlen($text);
 
         for ($i = 0; $i < $length; $i++) {
             $char = mb_substr($text, $i, 1);
-            $output .= $farsiMap[$char] ??
+            $output .= $lettersMap[$char] ?? $char; // جایگزینی حرف با نسخه چسبیده آن
+        }
+
+        return $output;
+    }
+}
