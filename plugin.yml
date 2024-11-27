@@ -1,6 +1,6 @@
-name: PersianChat
-main: PersianChat\Main
-version: 1.0.0
-api: [5.21.1] # نسخه API سرور PocketMine یا Piggot
-description: A plugin to reverse and fix Farsi text in chat.
+name: FunBlockOneBlock
+api: [5.21.1]
 author: ShahabManoochehri
+main: .\src\persianchat\main.php
+version: 1.0.0-BETA-2
+softdepend: ['ScoreHud']
